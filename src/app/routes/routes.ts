@@ -3,6 +3,7 @@ import { userRoutes } from '../modules/user/user.routes';
 import { authRoutes } from '../modules/auth/auth.routes';
 import { bannerRouter } from '../modules/banner/banner.routes';
 import { shopRouter } from '../modules/shop/shop.routes';
+import { dashboardRoutes } from '../modules/dashboard/dashboard.routes';
 
 const router = Router();
 
@@ -22,6 +23,10 @@ const moduleRoutes = [
   {
     path: '/shop',
     route: shopRouter,
+  },
+  {
+    path: '/dashboard',
+    route: dashboardRoutes,
   },
 ];
 
