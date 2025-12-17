@@ -76,11 +76,12 @@ const updateBanner = async (
   payload: IBanner,
   file?: Express.Multer.File,
 ) => {
-  const result = await Banner.findByIdAndUpdate(id, payload, { new: true });
   if (file) {
     const bannerFile = await fileUploader.uploadToCloudinary(file);
+    // console.log(bannerFile);
     payload.image = bannerFile.url;
   }
+  const result = await Banner.findByIdAndUpdate(id, payload, { new: true });
   if (!result) throw new AppError(400, 'Failed to update banner');
   return result;
 };
