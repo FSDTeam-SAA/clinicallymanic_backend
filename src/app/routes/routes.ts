@@ -4,6 +4,7 @@ import { authRoutes } from '../modules/auth/auth.routes';
 import { bannerRouter } from '../modules/banner/banner.routes';
 import { shopRouter } from '../modules/shop/shop.routes';
 import { dashboardRoutes } from '../modules/dashboard/dashboard.routes';
+import { contentRouter } from '../modules/content/content.routes';
 
 const router = Router();
 
@@ -27,6 +28,10 @@ const moduleRoutes = [
   {
     path: '/dashboard',
     route: dashboardRoutes,
+  },
+  {
+    path: '/content',
+    route: contentRouter,
   },
 ];
 
