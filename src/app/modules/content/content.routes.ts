@@ -10,4 +10,17 @@ router.post(
   contentController.createContent,
 );
 
+router.get('/', contentController.getAllContent);
+router.get('/:id', contentController.singleContent);
+router.put(
+  '/:id',
+  auth(userRole.admin, userRole.user),
+  contentController.updateContent,
+);
+router.delete(
+  '/:id',
+  auth(userRole.admin, userRole.user),
+  contentController.deleteContent,
+);
+
 export const contentRouter = router;
