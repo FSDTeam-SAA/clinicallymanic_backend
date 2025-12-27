@@ -15,5 +15,5 @@ export interface IUser {
   verified?: boolean;
   isSubscription?: boolean;
   subscription?: Types.ObjectId;
-  subscriptionExpiry?: Date;
+  subscriptionExpiry?: Date | null;
 }
