@@ -6,6 +6,9 @@ import { shopRouter } from '../modules/shop/shop.routes';
 import { dashboardRoutes } from '../modules/dashboard/dashboard.routes';
 import { contentRouter } from '../modules/content/content.routes';
 import { eventRouter } from '../modules/event/event.routes';
+import { contactRoutes } from '../modules/contact/contact.routes';
+import { newsletterRoutes } from '../modules/newsletter/newsletter.routes';
+import { subscriptionRouter } from '../modules/subscription/subscription.routes';
 
 const router = Router();
 
@@ -37,6 +40,18 @@ const moduleRoutes = [
   {
     path: '/event',
     route: eventRouter,
+  },
+  {
+    path: '/contact',
+    route: contactRoutes,
+  },
+  {
+    path: '/newsletter',
+    route: newsletterRoutes,
+  },
+  {
+    path: '/subscription',
+    route: subscriptionRouter,
   },
 ];
 

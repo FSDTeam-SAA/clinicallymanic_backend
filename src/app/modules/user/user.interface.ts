@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface IUser {
   firstName: string;
   lastName?: string;
@@ -11,5 +13,7 @@ export interface IUser {
   otp?: string;
   otpExpiry?: Date;
   verified?: boolean;
-  stripeAccountId?: string;
+  isSubscription?: boolean;
+  subscription?: Types.ObjectId;
+  subscriptionExpiry?: Date;
 }

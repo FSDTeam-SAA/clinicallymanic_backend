@@ -5,6 +5,7 @@ export interface ISubscription {
   type: 'monthly' | 'yearly';
   price: number;
   status?: 'active' | 'inactive';
-  features?: string[];
+  features?: string;
   createdBy?: Types.ObjectId;
+  totalSubscribedUsers?: Types.ObjectId[];
 }
