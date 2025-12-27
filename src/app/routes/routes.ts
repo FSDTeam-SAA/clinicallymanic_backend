@@ -5,6 +5,7 @@ import { bannerRouter } from '../modules/banner/banner.routes';
 import { shopRouter } from '../modules/shop/shop.routes';
 import { dashboardRoutes } from '../modules/dashboard/dashboard.routes';
 import { contentRouter } from '../modules/content/content.routes';
+import { eventRouter } from '../modules/event/event.routes';
 
 const router = Router();
 
@@ -32,6 +33,10 @@ const moduleRoutes = [
   {
     path: '/content',
     route: contentRouter,
+  },
+  {
+    path: '/event',
+    route: eventRouter,
   },
 ];
 
