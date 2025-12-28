@@ -135,6 +135,7 @@ const paySubscription = async (userId: string, subscriptionId: string) => {
     amount: subscription.price,
     currency: 'usd',
     status: 'pending',
+    paymentType: 'subscription',
   });
 
   return { url: session.url, sessionId: session.id };
@@ -146,5 +147,5 @@ export const SubscriptionService = {
   getSingleSubscription,
   updateSubscription,
   deleteSubscription,
-  paySubscription
+  paySubscription,
 };

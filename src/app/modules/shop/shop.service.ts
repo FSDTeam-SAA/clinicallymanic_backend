@@ -1,9 +1,14 @@
+import Stripe from 'stripe';
 import AppError from '../../error/appError';
 import { fileUploader } from '../../helper/fileUploder';
 import pagination, { IOption } from '../../helper/pagenation';
 import User from '../user/user.model';
 import { IShop } from './shop.interface';
 import Shop from './shop.model';
+import Payment from '../payment/payment.model';
+import config from '../../config';
+
+const stripe = new Stripe(config.stripe.secretKey!);
 
 const createShop = async (
   userId: string,
@@ -111,10 +116,58 @@ const deleteShop = async (id: string) => {
   return result;
 };
 
+const payShop = async (userId: string, shopId: string) => {
+  const user = await User.findById(userId);
+  if (!user) throw new AppError(404, 'User not found');
+  const shop = await Shop.findById(shopId);
+  if (!shop) throw new AppError(404, 'Shop not found');
+
+  const session = await stripe.checkout.sessions.create({
+    mode: 'payment',
+    payment_method_types: ['card'],
+    line_items: [
+      {
+        price_data: {
+          currency: 'usd',
+          unit_amount: shop.price ? shop.price * 100 : 0,
+          product_data: {
+            name: shop.name,
+            description: shop.description,
+          },
+        },
+        quantity: 1,
+      },
+    ],
+    customer_email: user.email,
+    success_url: `${config.frontendUrl}/payment-success`,
+    cancel_url: `${config.frontendUrl}/payment-cancel`,
+    metadata: {
+      userId: user._id.toString(),
+      productId: shop._id.toString(),
+      paymentType: 'shop',
+      type: shop.type,
+      amount: shop.price.toString(),
+    },
+  } as any);
+
+  await Payment.create({
+    user: user._id,
+    shop: shop._id,
+    stripeSessionId: session.id,
+    amount: shop.price || 0,
+    currency: 'usd',
+    paymentType: 'shop',
+    status: 'pending',
+  });
+
+  return { url: session.url, sessionId: session.id };
+};
+
 export const shopService = {
   createShop,
   getAllShops,
   singleShop,
   updateShop,
   deleteShop,
+  payShop,
 };

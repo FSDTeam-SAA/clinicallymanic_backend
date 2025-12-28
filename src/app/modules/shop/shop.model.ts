@@ -17,6 +17,7 @@ const shopSchema = new mongoose.Schema<IShop>(
       ref: 'User',
       required: true,
     },
+    totalShopUsers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
   },
   { timestamps: true },
 );

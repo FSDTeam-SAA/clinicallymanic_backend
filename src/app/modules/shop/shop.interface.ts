@@ -6,9 +6,10 @@ export interface IShop {
   description?: string;
   images?: string[];
   size?: string[];
-  price?: number;
+  price: number;
   type?: string;
   status?: 'active' | 'inactive';
   details?: string;
   createdBy?: Types.ObjectId;
+  totalShopUsers?: Types.ObjectId[];
 }
