@@ -53,6 +53,10 @@ const moduleRoutes = [
     path: '/subscription',
     route: subscriptionRouter,
   },
+  {
+    path: '/dashboard',
+    route: dashboardRoutes,
+  },
 ];
 
 moduleRoutes.forEach((route) => router.use(route.path, route.route));
