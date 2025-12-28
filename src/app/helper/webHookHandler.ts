@@ -3,6 +3,7 @@ import config from '../config';
 import Subscription from '../modules/subscription/subscription.model';
 import Payment from '../modules/payment/payment.model';
 import User from '../modules/user/user.model';
+import Shop from '../modules/shop/shop.model';
 
 const stripe = new Stripe(config.stripe.secretKey!);
 
@@ -57,6 +58,16 @@ const webHookHandler = async (req: any, res: any) => {
         await user.save();
         await user.save();
 
+        return res.json({ received: true });
+      }
+      if (paymentType === 'shop') {
+        const shop = await Shop.findById(payment.shop);
+        if (!shop) return res.json({ received: true });
+
+        if (!shop.totalShopUsers?.includes(user._id)) {
+          shop?.totalShopUsers?.push(user._id);
+          await shop.save();
+        }
         return res.json({ received: true });
       }
     }

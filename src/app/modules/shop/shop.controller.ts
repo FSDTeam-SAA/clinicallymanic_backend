@@ -70,10 +70,22 @@ const deleteShop = catchAsync(async (req, res) => {
   });
 });
 
+const payShop = catchAsync(async (req, res) => {
+  const userId = req.user?.id;
+  const result = await shopService.payShop(userId, req.params.id!);
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Shop paid successfully',
+    data: result,
+  });
+});
+
 export const shopController = {
   createShop,
   getAllShops,
   singleShop,
   updateShop,
   deleteShop,
+  payShop,
 };
