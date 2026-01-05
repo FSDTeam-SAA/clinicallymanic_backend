@@ -25,7 +25,20 @@ const getRevenueOverview = catchAsync(async (req, res) => {
   });
 });
 
+const getUserGrowth = catchAsync(async (req, res) => {
+  const year = req.query.year ? Number(req.query.year) : undefined;
+  const result = await dashboardService.getUserGrowthOverviewService(year);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'User growth data retrieved successfully',
+    data: result,
+  });
+});
+
 export const dashboardController = {
   dashboardOverview,
   getRevenueOverview,
+  getUserGrowth,
 };

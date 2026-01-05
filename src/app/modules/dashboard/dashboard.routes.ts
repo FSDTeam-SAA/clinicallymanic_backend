@@ -10,5 +10,10 @@ router.get(
   dashboardController.getRevenueOverview,
 );
 router.get('/', auth(userRole.admin), dashboardController.dashboardOverview);
+router.get(
+  '/user-growth',
+  auth(userRole.admin),
+  dashboardController.getUserGrowth,
+);
 
 export const dashboardRoutes = router;
