@@ -122,6 +122,15 @@ const payShop = async (userId: string, shopId: string) => {
   const shop = await Shop.findById(shopId);
   if (!shop) throw new AppError(404, 'Shop not found');
 
+  if (!user.isSubscription) {
+    if (shop.type === 'Exclusive') {
+      throw new AppError(
+        400,
+        'Please subscribe to our service to access this feature',
+      );
+    }
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
@@ -158,6 +167,7 @@ const payShop = async (userId: string, shopId: string) => {
     currency: 'usd',
     paymentType: 'shop',
     status: 'pending',
+    subscription: user.subscription ?? null,
   });
 
   return { url: session.url, sessionId: session.id };

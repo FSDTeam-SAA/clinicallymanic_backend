@@ -4,6 +4,11 @@ import auth from '../../middlewares/auth';
 import { userRole } from '../user/user.constant';
 const router = express.Router();
 
+router.get(
+  '/revenue-overview',
+  auth(userRole.admin),
+  dashboardController.getRevenueOverview,
+);
 router.get('/', auth(userRole.admin), dashboardController.dashboardOverview);
 
 export const dashboardRoutes = router;
