@@ -12,6 +12,20 @@ const dashboardOverview = catchAsync(async (req, res) => {
   });
 });
 
+const getRevenueOverview = catchAsync(async (req, res) => {
+  const year = req.query.year ? Number(req.query.year) : undefined;
+
+  const result = await dashboardService.getRevenueOverviewService(year);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Revenue overview data retrieved successfully',
+    data: result,
+  });
+});
+
 export const dashboardController = {
   dashboardOverview,
+  getRevenueOverview,
 };
