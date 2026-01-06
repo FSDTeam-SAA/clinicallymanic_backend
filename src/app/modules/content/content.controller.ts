@@ -5,7 +5,9 @@ import { contentService } from './content.service';
 
 const createContent = catchAsync(async (req, res) => {
   const userId = req.user?.id;
-  const result = await contentService.createContent(userId, req.body);
+  const fromdata = req.body.data ? JSON.parse(req.body.data) : req.body;
+  const file = req.file as Express.Multer.File;
+  const result = await contentService.createContent(userId, fromdata, file);
   sendResponse(res, {
     statusCode: 201,
     success: true,
@@ -47,10 +49,13 @@ const singleContent = catchAsync(async (req, res) => {
 
 const updateContent = catchAsync(async (req, res) => {
   const userId = req.user?.id;
+  const fromdata = req.body.data ? JSON.parse(req.body.data) : req.body;
+  const file = req.file as Express.Multer.File;
   const result = await contentService.updateContent(
     userId,
     req.params.id!,
-    req.body,
+    fromdata,
+    file,
   );
   sendResponse(res, {
     statusCode: 200,
