@@ -1,12 +1,22 @@
 import AppError from '../../error/appError';
+import { fileUploader } from '../../helper/fileUploder';
 import pagination, { IOption } from '../../helper/pagenation';
 import User from '../user/user.model';
 import { IContent } from './content.interface';
 import Content from './content.model';
 
-const createContent = async (userId: string, payload: IContent) => {
+const createContent = async (
+  userId: string,
+  payload: IContent,
+  file?: Express.Multer.File,
+) => {
   const user = await User.findById(userId);
   if (!user) throw new AppError(404, 'User not found');
+
+  if (file) {
+    const thembleImage = await fileUploader.uploadToCloudinary(file);
+    payload.thumbnail = thembleImage.url;
+  }
   const result = await Content.create({ ...payload, createdBy: user._id });
   return result;
 };
@@ -58,6 +68,7 @@ const updateContent = async (
   userId: string,
   id: string,
   payload: Partial<IContent>,
+  file?: Express.Multer.File,
 ) => {
   const user = await User.findById(userId);
   if (!user) throw new AppError(404, 'User not found');
@@ -66,6 +77,10 @@ const updateContent = async (
   if (user.role !== 'admin') {
     if (user._id.toString() !== content.createdBy.toString())
       throw new AppError(403, 'You are not authorized to update this content');
+  }
+  if (file) {
+    const thembleImage = await fileUploader.uploadToCloudinary(file);
+    payload.thumbnail = thembleImage.url;
   }
   const result = await Content.findByIdAndUpdate(id, payload, { new: true });
   return result;
