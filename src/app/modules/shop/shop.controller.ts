@@ -7,6 +7,9 @@ const createShop = catchAsync(async (req, res) => {
   const userId = req.user?.id;
   const files = req.files as Express.Multer.File[];
   const fromData = req.body.data ? JSON.parse(req.body.data) : req.body;
+  if (fromData.media && typeof fromData.media === 'string') {
+    fromData.media = JSON.parse(fromData.media);
+  }
   const result = await shopService.createShop(userId, fromData, files);
   sendResponse(res, {
     statusCode: 201,
@@ -51,6 +54,9 @@ const singleShop = catchAsync(async (req, res) => {
 const updateShop = catchAsync(async (req, res) => {
   const files = req.files as Express.Multer.File[];
   const fromData = req.body.data ? JSON.parse(req.body.data) : req.body;
+  if (fromData.media && typeof fromData.media === 'string') {
+    fromData.media = JSON.parse(fromData.media);
+  }
   const result = await shopService.updateShop(req.params.id!, fromData, files);
   sendResponse(res, {
     statusCode: 200,
