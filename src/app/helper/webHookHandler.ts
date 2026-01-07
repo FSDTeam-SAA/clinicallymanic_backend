@@ -4,6 +4,7 @@ import Subscription from '../modules/subscription/subscription.model';
 import Payment from '../modules/payment/payment.model';
 import User from '../modules/user/user.model';
 import Shop from '../modules/shop/shop.model';
+import Booking from '../modules/booking/booking.model';
 
 const stripe = new Stripe(config.stripe.secretKey!);
 
@@ -68,6 +69,12 @@ const webHookHandler = async (req: any, res: any) => {
           shop?.totalShopUsers?.push(user._id);
           await shop.save();
         }
+
+        await Booking.findOneAndUpdate(payment.booking, {
+          status: 'completed',
+          paymentId: payment._id,
+        });
+
         return res.json({ received: true });
       }
     }

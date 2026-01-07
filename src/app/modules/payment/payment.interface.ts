@@ -12,4 +12,5 @@ export interface IPayment {
   createdAt?: Date;
   updatedAt?: Date;
   stripePaymentIntentId?: string;
+  booking?: Types.ObjectId;
 }

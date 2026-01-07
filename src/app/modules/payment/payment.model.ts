@@ -20,6 +20,7 @@ const paymentSchema = new mongoose.Schema<IPayment>(
       enum: ['subscription', 'shop'],
     },
     stripePaymentIntentId: { type: String },
+    booking: { type: mongoose.Schema.Types.ObjectId, ref: 'Booking' },
   },
   { timestamps: true },
 );

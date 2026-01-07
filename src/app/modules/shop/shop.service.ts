@@ -7,6 +7,8 @@ import { IShop } from './shop.interface';
 import Shop from './shop.model';
 import Payment from '../payment/payment.model';
 import config from '../../config';
+import Booking from '../booking/booking.model';
+import { IBooking } from '../booking/booking.interface';
 
 const stripe = new Stripe(config.stripe.secretKey!);
 
@@ -125,7 +127,11 @@ const deleteShop = async (id: string) => {
   return result;
 };
 
-const payShop = async (userId: string, shopId: string) => {
+const payShop = async (
+  userId: string,
+  shopId: string,
+  payload: Partial<IBooking>,
+) => {
   const user = await User.findById(userId);
   if (!user) throw new AppError(404, 'User not found');
   const shop = await Shop.findById(shopId);
@@ -168,7 +174,16 @@ const payShop = async (userId: string, shopId: string) => {
     },
   } as any);
 
-  await Payment.create({
+  const booking = await Booking.create({
+    userId: user._id,
+    shopId: shop._id,
+    price: shop.price,
+    status: 'pending',
+    ...payload,
+  });
+
+ 
+  const payment = await Payment.create({
     user: user._id,
     shop: shop._id,
     stripeSessionId: session.id,
@@ -177,7 +192,10 @@ const payShop = async (userId: string, shopId: string) => {
     paymentType: 'shop',
     status: 'pending',
     subscription: user.subscription ?? null,
+    booking: booking._id,
   });
+  booking.paymentId = payment._id;
+  await booking.save();
 
   return { url: session.url, sessionId: session.id };
 };
