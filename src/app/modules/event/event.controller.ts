@@ -8,7 +8,9 @@ const createEvent = catchAsync(async (req, res) => {
   if (!userId) {
     throw new Error('User authentication required');
   }
-  const result = await EventService.createEvent(userId, req.body);
+  const file = req.file as Express.Multer.File;
+  const fromdata = req.body ? JSON.parse(req.body.data) : req.body;
+  const result = await EventService.createEvent(userId, fromdata, file);
 
   sendResponse(res, {
     statusCode: 201,
@@ -50,7 +52,9 @@ const getSingleEvent = catchAsync(async (req, res) => {
   });
 });
 const updateEvent = catchAsync(async (req, res) => {
-  const result = await EventService.updateEvent(req.params.id!, req.body);
+  const file = req.file as Express.Multer.File;
+  const fromdata = req.body ? JSON.parse(req.body.data) : req.body;
+  const result = await EventService.updateEvent(req.params.id!, fromdata, file);
   sendResponse(res, {
     statusCode: 200,
     success: true,

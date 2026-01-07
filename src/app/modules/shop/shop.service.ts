@@ -26,6 +26,11 @@ const createShop = async (
     );
     payload.images = shopFile;
   }
+
+  if (typeof payload.size === 'string') {
+    payload.size = JSON.parse(payload.size);
+  }
+
   const result = await Shop.create({ ...payload, createdBy: user._id });
   if (!result) throw new AppError(400, 'Failed to create shop');
   return result;
@@ -105,6 +110,10 @@ const updateShop = async (
     );
     payload.images = shopFile;
   }
+  if (typeof payload.size === 'string') {
+    payload.size = JSON.parse(payload.size);
+  }
+
   const result = await Shop.findByIdAndUpdate(id, payload, { new: true });
   if (!result) throw new AppError(404, 'Shop not found');
   return result;
