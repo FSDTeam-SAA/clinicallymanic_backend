@@ -1,6 +1,7 @@
 import { Types } from 'mongoose';
 
 export interface IEvent {
+  thumbnail: string;
   title: string;
   description: string;
   location: string;

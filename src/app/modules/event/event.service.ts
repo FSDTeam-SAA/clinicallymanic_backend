@@ -1,11 +1,21 @@
+import { fileUploader } from '../../helper/fileUploder';
 import pagination, { IOption } from '../../helper/pagenation';
 import User from '../user/user.model';
 import { IEvent } from './event.interface';
 import Event from './event.model';
 
-const createEvent = async (userId: string, payload: IEvent) => {
+const createEvent = async (
+  userId: string,
+  payload: IEvent,
+  file?: Express.Multer.File,
+) => {
   const user = await User.findById(userId);
   if (!user) throw new Error('User not found');
+
+  if (file) {
+    const fileUploaderThemile = await fileUploader.uploadToCloudinary(file);
+    payload.thumbnail = fileUploaderThemile?.url;
+  }
 
   const result = await Event.create({ ...payload, createdBy: user._id });
   return result;
@@ -51,7 +61,15 @@ const singleEvent = async (id: string) => {
   return result;
 };
 
-const updateEvent = async (id: string, payload: Partial<IEvent>) => {
+const updateEvent = async (
+  id: string,
+  payload: Partial<IEvent>,
+  file?: Express.Multer.File,
+) => {
+  if (file) {
+    const fileUploaderThemile = await fileUploader.uploadToCloudinary(file);
+    payload.thumbnail = fileUploaderThemile?.url;
+  }
   const result = await Event.findByIdAndUpdate(id, payload, { new: true });
   return result;
 };

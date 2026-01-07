@@ -3,6 +3,7 @@ import { IEvent } from './event.interface';
 
 const eventSchema = new mongoose.Schema<IEvent>(
   {
+    thumbnail: { type: String },
     title: { type: String, required: true },
     description: { type: String, required: true },
     location: { type: String, required: true },
