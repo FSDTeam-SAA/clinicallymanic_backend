@@ -72,7 +72,7 @@ const deleteShop = catchAsync(async (req, res) => {
 
 const payShop = catchAsync(async (req, res) => {
   const userId = req.user?.id;
-  const result = await shopService.payShop(userId, req.params.id!);
+  const result = await shopService.payShop(userId, req.params.id!, req.body);
   sendResponse(res, {
     statusCode: 200,
     success: true,
