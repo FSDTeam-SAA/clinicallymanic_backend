@@ -117,8 +117,8 @@ const paySubscription = async (userId: string, subscriptionId: string) => {
       },
     ],
     customer_email: user.email,
-    success_url: `${config.frontendUrl}/success`,
-    cancel_url: `${config.frontendUrl}/cancel`,
+    success_url: `${config.frontendUrl}/plans-success`,
+    cancel_url: `${config.frontendUrl}/plans-cancel`,
     metadata: {
       userId: user._id.toString(),
       subscriptionId: subscription._id.toString(),
