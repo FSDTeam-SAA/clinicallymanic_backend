@@ -174,15 +174,19 @@ const payShop = async (
     },
   } as any);
 
+  if (!shop.size?.includes(payload.size!)) {
+    throw new AppError(400, 'Invalid size');
+  }
+
   const booking = await Booking.create({
     userId: user._id,
     shopId: shop._id,
     price: shop.price,
+    productName: shop.name,
     status: 'pending',
     ...payload,
   });
 
- 
   const payment = await Payment.create({
     user: user._id,
     shop: shop._id,
