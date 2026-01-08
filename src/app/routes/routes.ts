@@ -10,6 +10,7 @@ import { contactRoutes } from '../modules/contact/contact.routes';
 import { newsletterRoutes } from '../modules/newsletter/newsletter.routes';
 import { subscriptionRouter } from '../modules/subscription/subscription.routes';
 import { paymentRoutes } from '../modules/payment/payment.routes';
+import { offerRoutes } from '../modules/offers/offers.routes';
 
 const router = Router();
 
@@ -61,6 +62,10 @@ const moduleRoutes = [
   {
     path: '/payment',
     route: paymentRoutes,
+  },
+  {
+    path: '/offer',
+    route: offerRoutes,
   },
 ];
 
