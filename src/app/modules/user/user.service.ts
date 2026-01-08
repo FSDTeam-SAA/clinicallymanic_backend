@@ -99,7 +99,7 @@ const deleteUserById = async (id: string) => {
 };
 
 const profile = async (id: string) => {
-  const result = await User.findById(id);
+  const result = await User.findById(id).populate('subscription');
   if (!result) {
     throw new AppError(404, 'User not found');
   }
