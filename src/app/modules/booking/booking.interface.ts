@@ -11,7 +11,7 @@ export interface IBooking {
   location?: string;
   price?: number;
   bookingDate?: Date;
-  status?: 'pending' | 'confirmed' | 'cancelled';
+  status?: 'pending' | 'shipping' | 'delivered' | 'cancelled';
   notes?: string;
   size?: string;
 }
