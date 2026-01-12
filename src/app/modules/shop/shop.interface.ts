@@ -1,5 +1,12 @@
 import { Types } from 'mongoose';
 
+export type ShopCategory =
+  | 'mens'
+  | 'womens'
+  | 'childrens'
+  | 'accessories'
+  | 'other';
+
 export interface IShop {
   name: string;
   title?: string;
@@ -12,4 +19,6 @@ export interface IShop {
   details?: string;
   createdBy?: Types.ObjectId;
   totalShopUsers?: Types.ObjectId[];
+
+  categories?: ShopCategory[];
 }

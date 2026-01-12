@@ -29,6 +29,7 @@ const getAllShops = catchAsync(async (req, res) => {
     'type',
     'status',
     'details',
+    'categories'
   ]);
   const options = pick(req.query, ['page', 'limit', 'sortBy', 'sortOrder']);
   const result = await shopService.getAllShops(filters, options);
