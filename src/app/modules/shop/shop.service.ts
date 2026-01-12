@@ -50,6 +50,7 @@ const getAllShops = async (params: any, options: IOption) => {
     'type',
     'status',
     'details',
+    'categories'
   ];
 
   if (searchTerm) {
