@@ -31,7 +31,7 @@ const getAllBooking = async (userId: string, params: any, options: IOption) => {
   }
 
   if (user.role !== userRole.admin) {
-    andCondition.push({ user: user._id });
+    andCondition.push({ userId: user._id });
   }
 
   const query = andCondition.length > 0 ? { $and: andCondition } : {};
