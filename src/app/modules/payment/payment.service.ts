@@ -42,7 +42,8 @@ const paymentByUser = async (userId: string, params: any, options: IOption) => {
     .limit(limit)
     .populate('user')
     .populate('shop')
-    .populate('subscription');
+    .populate('subscription')
+    .populate('booking');
 
   const total = await Payment.countDocuments(query);
 

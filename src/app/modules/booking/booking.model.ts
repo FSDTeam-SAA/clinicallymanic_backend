@@ -16,7 +16,7 @@ const bookingSchema = new mongoose.Schema<IBooking>(
     size: { type: String },
     status: {
       type: String,
-      enum: ['pending', 'confirmed', 'cancelled'],
+      enum: ['pending','shipping', 'delivered', 'cancelled'],
       default: 'pending',
     },
     notes: { type: String },

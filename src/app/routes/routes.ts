@@ -11,6 +11,7 @@ import { newsletterRoutes } from '../modules/newsletter/newsletter.routes';
 import { subscriptionRouter } from '../modules/subscription/subscription.routes';
 import { paymentRoutes } from '../modules/payment/payment.routes';
 import { offerRoutes } from '../modules/offers/offers.routes';
+import { bookingRouter } from '../modules/booking/booking.routes';
 
 const router = Router();
 
@@ -66,6 +67,10 @@ const moduleRoutes = [
   {
     path: '/offer',
     route: offerRoutes,
+  },
+  {
+    path: '/booking',
+    route: bookingRouter,
   },
 ];
 
