@@ -118,11 +118,11 @@ const updateShop = async (
     payload.images = shopFile;
   }
   if (typeof payload.size === 'string') {
-    payload.size = JSON.parse(payload.size);
+    payload.categories = JSON.parse(payload.size);
   }
 
   if (typeof payload.categories === 'string') {
-    payload.size = JSON.parse(payload.categories);
+    payload.categories = JSON.parse(payload.categories);
   }
 
   const result = await Shop.findByIdAndUpdate(id, payload, { new: true });
