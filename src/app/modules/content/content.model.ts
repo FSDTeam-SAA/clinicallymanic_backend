@@ -48,7 +48,7 @@ const contentSchema = new Schema<IContent>(
   },
   {
     timestamps: true,
-    strict: false, // 🔥 future proof
+    strict: false, 
     minimize: false,
   },
 );
