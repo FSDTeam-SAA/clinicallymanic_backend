@@ -33,6 +33,10 @@ const createShop = async (
     payload.size = JSON.parse(payload.size);
   }
 
+  if (typeof payload.categories === 'string') {
+    payload.size = JSON.parse(payload.categories);
+  }
+
   const result = await Shop.create({ ...payload, createdBy: user._id });
   if (!result) throw new AppError(400, 'Failed to create shop');
   return result;
@@ -50,7 +54,7 @@ const getAllShops = async (params: any, options: IOption) => {
     'type',
     'status',
     'details',
-    'categories'
+    'categories',
   ];
 
   if (searchTerm) {
@@ -115,6 +119,10 @@ const updateShop = async (
   }
   if (typeof payload.size === 'string') {
     payload.size = JSON.parse(payload.size);
+  }
+
+  if (typeof payload.categories === 'string') {
+    payload.size = JSON.parse(payload.categories);
   }
 
   const result = await Shop.findByIdAndUpdate(id, payload, { new: true });
