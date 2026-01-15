@@ -11,6 +11,7 @@ router.post(
   fileUploader.upload.array('images'),
   shopController.createShop,
 );
+
 router.post('/pay/:id', auth(userRole.user), shopController.payShop);
 router.get('/', shopController.getAllShops);
 router.get('/:id', shopController.singleShop);
