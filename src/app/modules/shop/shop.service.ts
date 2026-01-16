@@ -108,7 +108,7 @@ const updateShop = async (
   payload: Partial<IShop>,
   files?: Express.Multer.File[],
 ) => {
-  if (files) {
+  if (files && files.length > 0) {
     const shopFile = await Promise.all(
       files.map(async (file) => {
         const result = await fileUploader.uploadToCloudinary(file);
@@ -117,6 +117,7 @@ const updateShop = async (
     );
     payload.images = shopFile;
   }
+
   if (typeof payload.size === 'string') {
     payload.categories = JSON.parse(payload.size);
   }
