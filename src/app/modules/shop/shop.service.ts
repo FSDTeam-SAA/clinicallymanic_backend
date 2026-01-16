@@ -34,7 +34,7 @@ const createShop = async (
   }
 
   if (typeof payload.categories === 'string') {
-    payload.size = JSON.parse(payload.categories);
+    payload.categories = JSON.parse(payload.categories);
   }
 
   const result = await Shop.create({ ...payload, createdBy: user._id });
@@ -119,7 +119,7 @@ const updateShop = async (
   }
 
   if (typeof payload.size === 'string') {
-    payload.categories = JSON.parse(payload.size);
+    payload.size = JSON.parse(payload.size);
   }
 
   if (typeof payload.categories === 'string') {
