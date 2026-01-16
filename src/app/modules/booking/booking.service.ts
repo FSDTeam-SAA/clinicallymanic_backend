@@ -74,8 +74,16 @@ const updateStatus = async (id: string, status: string) => {
   return result;
 };
 
+const deleteBooking = async (id: string) => {
+  const booking = await Booking.findByIdAndDelete(id);
+  if (!booking) throw new AppError(404, 'Booking not found');
+
+  return booking;
+};
+
 export const bookingService = {
   getAllBooking,
   getBookingById,
   updateStatus,
+  deleteBooking,
 };
