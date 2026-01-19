@@ -100,6 +100,13 @@ const paySubscription = async (userId: string, subscriptionId: string) => {
   const subscription = await Subscription.findById(subscriptionId);
   if (!subscription) throw new AppError(404, 'Subscription not found');
 
+  if (
+    subscription.name === 'basic' &&
+    subscription.totalSubscribedUsers?.includes(user._id)
+  ) {
+    throw new AppError(400, 'You have already subscribed to this plan');
+  }
+
   const session = await stripe.checkout.sessions.create({
     mode: 'payment',
     payment_method_types: ['card'],
