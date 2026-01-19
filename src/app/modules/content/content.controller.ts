@@ -1,3 +1,4 @@
+import AppError from '../../error/appError';
 import pick from '../../helper/pick';
 import catchAsync from '../../utils/catchAsycn';
 import sendResponse from '../../utils/sendResponse';
@@ -5,9 +6,25 @@ import { contentService } from './content.service';
 
 const createContent = catchAsync(async (req, res) => {
   const userId = req.user?.id;
-  const fromdata = req.body.data ? JSON.parse(req.body.data) : req.body;
+
+  const formData = req.body.data ? JSON.parse(req.body.data) : req.body;
+
+  if (formData.media && typeof formData.media === 'string') {
+    try {
+      formData.media = JSON.parse(formData.media);
+    } catch (err) {
+      console.log(err);
+      throw new AppError(400, 'Invalid media JSON format');
+    }
+  }
+
+  if (formData.media && !Array.isArray(formData.media)) {
+    formData.media = [formData.media];
+  }
+
   const file = req.file as Express.Multer.File;
-  const result = await contentService.createContent(userId, fromdata, file);
+
+  const result = await contentService.createContent(userId, formData, file);
   sendResponse(res, {
     statusCode: 201,
     success: true,
@@ -49,12 +66,26 @@ const singleContent = catchAsync(async (req, res) => {
 
 const updateContent = catchAsync(async (req, res) => {
   const userId = req.user?.id;
-  const fromdata = req.body.data ? JSON.parse(req.body.data) : req.body;
+  const formData = req.body.data ? JSON.parse(req.body.data) : req.body;
+
+  if (formData.media && typeof formData.media === 'string') {
+    try {
+      formData.media = JSON.parse(formData.media);
+    } catch (err) {
+      console.log(err);
+      throw new AppError(400, 'Invalid media JSON format');
+    }
+  }
+
+  if (formData.media && !Array.isArray(formData.media)) {
+    formData.media = [formData.media];
+  }
+
   const file = req.file as Express.Multer.File;
   const result = await contentService.updateContent(
     userId,
     req.params.id!,
-    fromdata,
+    formData,
     file,
   );
   sendResponse(res, {

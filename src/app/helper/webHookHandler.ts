@@ -48,10 +48,15 @@ const webHookHandler = async (req: any, res: any) => {
           await subscription.save();
         }
 
-        const monthAdd = subscription.type === 'yearly' ? 12 : 1;
+        let expireDate = new Date();
 
-        const expireDate = new Date();
-        expireDate.setMonth(expireDate.getMonth() + monthAdd);
+        if (subscription.type === 'yearly') {
+          expireDate.setFullYear(expireDate.getFullYear() + 1);
+        } else if (subscription.type === 'monthly') {
+          expireDate.setMonth(expireDate.getMonth() + 1);
+        } else if (subscription.type === 'weekly') {
+          expireDate.setDate(expireDate.getDate() + 7);
+        }
 
         user.isSubscription = true;
         user.subscription = subscription._id;
