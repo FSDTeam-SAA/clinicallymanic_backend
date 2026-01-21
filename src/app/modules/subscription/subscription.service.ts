@@ -10,8 +10,8 @@ import Payment from '../payment/payment.model';
 const stripe = new Stripe(config.stripe.secretKey!);
 
 const createSubscription = async (payload: ISubscription) => {
-  const name = await Subscription.findOne({ name: payload.name });
-  if (name) throw new AppError(400, 'Subscription already exists');
+  // const name = await Subscription.findOne({ name: payload.name });
+  // if (name) throw new AppError(400, 'Subscription already exists');
   const result = await Subscription.create(payload);
   return result;
 };
